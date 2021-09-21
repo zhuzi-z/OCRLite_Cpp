@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/add.svg</file>
+        <file>icons/baidu.svg</file>
+        <file>icons/copy.svg</file>
+        <file>icons/cursor.svg</file>
+        <file>icons/google.svg</file>
+        <file>icons/icons.qrc</file>
+        <file>icons/language.svg</file>
+        <file>icons/OCRLite.svg</file>
+        <file>icons/screen.svg</file>
+        <file>icons/screenshot.svg</file>
+        <file>icons/setting.svg</file>
+        <file>icons/sort.svg</file>
+        <file>icons/tex.svg</file>
+    </qresource>
+</RCC>

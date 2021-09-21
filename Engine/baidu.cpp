@@ -37,8 +37,8 @@ Baidu::Baidu(QString lang)
 
     state = config->value("/Setting/Baidu/api_state", QVariant(1)).toInt();  // 缺省一定请求公用key
     if (state==(int)BaiduState::CHANGE2PUBLIC || state==(int)BaiduState::KEEP_PUBLIC) {
-        ak = "DIW54VkOxwDiraDaVPsGENHR";
-        sk = "wXDQN427Ns9wfwKWOLbv2h2yT3DAwfDv";
+        ak = "your key";
+        sk = "your key";
         if (state==(int)BaiduState::CHANGE2PUBLIC)
             access_token = "";
     } else if (state == (int)BaiduState::CHANGE2PRIVATE || state==(int)BaiduState::KEEP_PRIVATE) {

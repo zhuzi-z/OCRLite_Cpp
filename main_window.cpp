@@ -156,7 +156,7 @@ void Main_Window::screenshot_ac()
     QRect area = area_picker->get_area();
     QTimer::singleShot(200, [=]() {  // 保证area_picker退出
         screenshot = shot_screen->grabWindow(0, area.x(), area.y(), area.width(), area.height());
-        this->ui->image_viewer->setPixmap(screenshot);
+//        this->ui->image_viewer->setPixmap(screenshot);
         if (this->isHidden())
             this->show();
         get_text();

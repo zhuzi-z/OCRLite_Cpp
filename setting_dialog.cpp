@@ -32,6 +32,7 @@ void Setting::init_states()
         ui->checkBox_baidu_api->setCheckState(Qt::CheckState::Checked);
     else
         ui->checkBox_baidu_api->setCheckState(Qt::CheckState::Unchecked);
+    // 初始化时手动触发状态改变 -> 与ak，sk输入框相关
     emit ui->checkBox_baidu_api->stateChanged(ui->checkBox_baidu_api->checkState());
     ui->ledit_ak->setText(config->value("/Setting/Baidu/ak", "").toString());
     ui->ledit_sk->setText(config->value("/Setting/Baidu/sk", "").toString());

@@ -15,9 +15,6 @@ AreaPicker::AreaPicker(QColor color, float opacity, QWidget *parent) : QWidget(p
     this->opacity = opacity;
 
     this->qp = new QPainter(this);
-//    this->qp->begin(this);
-//    this->qp->setBrush(this->background_color);
-//    this->qp->end();
 
 //    this->setCursor(Qt::CrossCursor);  // 改变游标类型
     this->setCursor(QCursor(QPixmap(":/icons/cursor.svg")));
@@ -58,7 +55,6 @@ void AreaPicker::paintEvent(QPaintEvent *event)
 
 void AreaPicker::mousePressEvent(QMouseEvent *event)
 {
-//    if (event->buttons() == Qt::LeftButton)
     this->rect_area.setTopLeft(event->pos());  // 获取矩形区域的左上角
 }
 
@@ -76,7 +72,7 @@ void AreaPicker::mouseMoveEvent(QMouseEvent *event)
 
 void AreaPicker::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Escape)
+    if (event->key() == Qt::Key_Escape)  // 取消截图
         this->close();
 }
 

@@ -5,7 +5,6 @@
 #include <QSettings>
 
 #include "Engine/baidu.h"
-// 百度意外错误时，是否需要强制更新？？？
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SettingDialog; }
@@ -22,13 +21,10 @@ private:
 public:
     static Setting* get_instance(QWidget* parent=nullptr)
     {
-        if (m_instance != nullptr) {
-            qDebug() << "instance";
+        if (m_instance != nullptr)
             return m_instance;
-        }
-        else {
+        else
             return new Setting(parent);
-        }
     }
 
     void init_states();

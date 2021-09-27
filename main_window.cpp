@@ -38,7 +38,11 @@ void Main_Window::init_sys_tray() {
     sys_tray->show();
     QMenu* tray_menu = new QMenu(this);
 
-    connect(sys_tray, &QSystemTrayIcon::activated, this, &Main_Window::showNormal);
+//    connect(sys_tray, &QSystemTrayIcon::activated, this, &Main_Window::showNormal);
+    connect(sys_tray, &QSystemTrayIcon::activated, [=](bool){
+        this->restoreGeometry(this->w_geometry);  // 还原上一次窗口的位置
+        this->showNormal();
+    });
 
     QAction* show_ac = new QAction("主窗口", this);
     connect(show_ac, &QAction::triggered, this, &Main_Window::showNormal);
@@ -106,6 +110,9 @@ void Main_Window::init_stage()
     emit ui->box_sort->currentTextChanged(ui->box_sort->currentText());
     emit ui->btn_append->clicked();
 
+    // geometry
+    this->restoreGeometry(config->value("MainWindow/geometry").toByteArray());
+
     // Font
     QString font_name = config->value("/Setting/UI/font", "").toString();
     QFont font;
@@ -132,6 +139,8 @@ Main_Window::~Main_Window()
 
 void Main_Window::closeEvent(QCloseEvent *event)
 {
+    // 记录当前窗口位置
+    this->w_geometry = this->saveGeometry();
     this->close();
 }
 
@@ -144,6 +153,7 @@ void Main_Window::quit_ac()
     config->setValue("MainWindow/shot_screen", ui->box_screen->currentText());
     config->setValue("MainWindow/sort_option", ui->box_sort->currentText());
     config->setValue("/MainWindow/is_append", ui->btn_append->isChecked());
+    config->setValue("MainWindow/geometry", this->saveGeometry());
 
     delete config;
 

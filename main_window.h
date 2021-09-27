@@ -42,6 +42,7 @@ private:
     QString lang;
     SortOption sort_option;
     bool is_append;
+    QByteArray w_geometry;  // 记录窗口位置，关闭但未退出时使用
 
 private:
     void init_sys_tray();

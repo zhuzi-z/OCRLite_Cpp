@@ -38,18 +38,17 @@ void Main_Window::init_sys_tray() {
     sys_tray->show();
     QMenu* tray_menu = new QMenu(this);
 
-//    connect(sys_tray, &QSystemTrayIcon::activated, this, &Main_Window::showNormal);
+    // 左键单击事件
     connect(sys_tray, &QSystemTrayIcon::activated, [=](bool){
         this->restoreGeometry(this->w_geometry);  // 还原上一次窗口的位置
         this->showNormal();
     });
 
-    QAction* show_ac = new QAction("主窗口", this);
+    QAction* show_ac = new QAction(QIcon(":/icons/tray_home.svg"), "主窗口", this);
     connect(show_ac, &QAction::triggered, this, &Main_Window::showNormal);
     tray_menu->addAction(show_ac);
 
-    QAction* quit_ac = new QAction("退出", this);
-//    connect(quit_ac, &QAction::triggered, [=](bool){QApplication::quit();});
+    QAction* quit_ac = new QAction(QIcon(":/icons/tray_exit.svg"), "退出", this);
     connect(quit_ac, &QAction::triggered, this, &Main_Window::quit_ac);
     tray_menu->addAction(quit_ac);
 

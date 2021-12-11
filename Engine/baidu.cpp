@@ -15,7 +15,7 @@
 #include "pixmap2byteArray.h"
 
 
-const QString request_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
+static const QString request_url = "https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";
 
 
 Baidu::Baidu(QString lang)
@@ -32,7 +32,7 @@ Baidu::Baidu(QString lang)
     this->net_request = new QNetworkRequest();
     this->net_manager = new QNetworkAccessManager();
 
-    QSettings* config = new QSettings("./config.ini", QSettings::IniFormat);
+    QSettings* config = new QSettings(config_path, QSettings::IniFormat);
     config->setIniCodec("UTF-8");
 
     state = config->value("/Setting/Baidu/api_state", QVariant(1)).toInt();  // 缺省一定请求公用key
@@ -181,7 +181,7 @@ QString Baidu::sort_text(QString text)
 
 Baidu::~Baidu()
 {
-    QSettings* config = new QSettings("./config.ini", QSettings::IniFormat);
+    QSettings* config = new QSettings(config_path, QSettings::IniFormat);
     config->setIniCodec("UTF-8");
     // acceess_token == "", 下次重新请求
     if (state==(int)BaiduState::CHANGE2PUBLIC && this->access_token!="")

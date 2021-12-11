@@ -28,6 +28,7 @@ SOURCES += \
     setting_dialog.cpp
 
 HEADERS += \
+    CONFIGURE.h \
     Engine/baidu.h \
     Engine/base.h \
     Engine/engine_factory.h \

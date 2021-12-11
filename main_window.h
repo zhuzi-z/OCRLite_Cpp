@@ -11,6 +11,7 @@
 #include "Engine/base.h"
 #include "Engine/baidu.h"
 #include "setting_dialog.h"
+#include "CONFIGURE.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Main_Window; }

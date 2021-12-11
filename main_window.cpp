@@ -6,7 +6,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QSystemTrayIcon>
-
+#include <QDir>
 
 Main_Window::Main_Window(QWidget *parent)
     : QMainWindow(parent)
@@ -28,6 +28,8 @@ Main_Window::Main_Window(QWidget *parent)
     init_stage();
 
     ui->image_viewer->close();
+
+    qDebug() << QDir::homePath() << Qt::endl;
 }
 
 
@@ -57,7 +59,7 @@ void Main_Window::init_sys_tray() {
 
 void Main_Window::init_stage()
 {
-    QSettings* config = new QSettings("./config.ini", QSettings::IniFormat);
+    QSettings* config = new QSettings(config_path, QSettings::IniFormat);
     config->setIniCodec("UTF-8");
     // Engine
     QList<QPair<QString, QString>> engines_info = engine_factory->get_engines_info();
@@ -66,7 +68,7 @@ void Main_Window::init_stage()
     for (int i=0; i<engines_info.size(); i++) {
         ui->box_engine->addItem(QIcon(engines_info[i].second), engines_info[i].first);
     }
-    ui->box_engine->setCurrentText(config->value("/MainWindow/engine/", "Tesseract").toString());  // 会触发信号
+    ui->box_engine->setCurrentText(config->value("/MainWindow/engine/", "百度").toString());  // 会触发信号
     ui->box_engine->blockSignals(false);
 
     ocr_engine = engine_factory->get_engine(ui->box_engine->currentText(), config->value("/MainWindow/lang", "").toString()); // 语言栏需要
@@ -110,7 +112,7 @@ void Main_Window::init_stage()
     emit ui->btn_append->clicked();
 
     // geometry
-    this->restoreGeometry(config->value("MainWindow/geometry").toByteArray());
+    this->restoreGeometry(config->value("/MainWindow/geometry").toByteArray());
 
     // Font
     QString font_name = config->value("/Setting/UI/font", "").toString();
@@ -145,14 +147,14 @@ void Main_Window::closeEvent(QCloseEvent *event)
 
 void Main_Window::quit_ac()
 {
-    QSettings* config = new QSettings("./config.ini", QSettings::IniFormat);
+    QSettings* config = new QSettings(config_path, QSettings::IniFormat);
     config->setIniCodec("UTF-8");
     config->setValue("/MainWindow/engine", ui->box_engine->currentText());
     config->setValue("/MainWindow/lang", ui->box_lang->currentText());
-    config->setValue("MainWindow/shot_screen", ui->box_screen->currentText());
-    config->setValue("MainWindow/sort_option", ui->box_sort->currentText());
+    config->setValue("/MainWindow/shot_screen", ui->box_screen->currentText());
+    config->setValue("/MainWindow/sort_option", ui->box_sort->currentText());
     config->setValue("/MainWindow/is_append", ui->btn_append->isChecked());
-    config->setValue("MainWindow/geometry", this->saveGeometry());
+    config->setValue("/MainWindow/geometry", this->saveGeometry());
 
     delete config;
 
@@ -174,7 +176,7 @@ void Main_Window::screenshot_ac()
 
 void Main_Window::config_changed_ac()
 {
-    QSettings* config = new QSettings("./config.ini", QSettings::IniFormat);
+    QSettings* config = new QSettings(config_path, QSettings::IniFormat);
     config->setIniCodec("UTF-8");
     // screenshot
     QColor color = config->value("/Setting/Screenshot/color", QVariant(QColor(135, 167, 179))).value<QColor>();
@@ -279,7 +281,7 @@ void Main_Window::on_box_engine_currentIndexChanged(const QString &arg1)
 void Main_Window::on_btn_setting_clicked()
 {
     if (setting == nullptr) {
-        setting = Setting::get_instance();
+        setting = Setting::get_instance(this);
         connect(setting, SIGNAL(config_changed()), this, SLOT(config_changed_ac()));
     }
 

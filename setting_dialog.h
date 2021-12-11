@@ -5,6 +5,7 @@
 #include <QSettings>
 
 #include "Engine/baidu.h"
+#include "CONFIGURE.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SettingDialog; }

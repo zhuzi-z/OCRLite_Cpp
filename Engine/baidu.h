@@ -2,6 +2,7 @@
 #define BAIDU_H
 
 #include "base.h"
+#include "CONFIGURE.h"
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 

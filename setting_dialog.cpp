@@ -13,7 +13,7 @@ Setting::Setting(QWidget* parent)
     , ui(new Ui::SettingDialog())
 {
     ui->setupUi(this);
-    config = new QSettings("./config.ini", QSettings::IniFormat);
+    config = new QSettings(config_path, QSettings::IniFormat);
     config->setIniCodec("UTF-8");
 }
 
@@ -99,7 +99,7 @@ void Setting::on_btn_color_clicked()
 
 void Setting::on_dialog_btn_box_accepted()
 {
-    config->setValue("Setting/Baidu/api_state", (int)api_state);
+    config->setValue("/Setting/Baidu/api_state", (int)api_state);
     config->setValue("/Setting/Baidu/ak", ui->ledit_ak->text());
     config->setValue("/Setting/Baidu/sk", ui->ledit_sk->text());
     QColor color = ui->btn_color->palette().color(QPalette::Button).toRgb();
